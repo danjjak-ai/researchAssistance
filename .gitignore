@@ -37,7 +37,10 @@ secrets.json
 *.key
 
 # === Project Specific (Data & Vault) ===
-# We ignore generated research data to keep the repo clean
+# Ignore all auxiliary markdown files, keep only main README.md
+*.md
+!README.md
+
 /data/
 /vault/raw/*.pdf
 /vault/wiki/*.md
