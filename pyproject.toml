@@ -1,0 +1,33 @@
+[project]
+name = "research-assistant"
+version = "0.1.0"
+description = "Agentic Research Assistant for Knowledge Synthesis in Obsidian"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langgraph>=0.3.0",
+    "langchain-google-genai>=2.0.0",
+    "langchain-core>=0.3.0",
+    "arxiv>=2.1.0",
+    "httpx>=0.27.0",
+    "magic-pdf[full]>=0.1.0",
+    "marker-pdf>=0.0.35",
+    "chromadb>=0.5.0",
+    "networkx>=3.3",
+    "gradio>=5.0.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.32.0",
+    "pydantic-settings>=2.5.0",
+    "structlog>=24.0.0",
+    "jinja2>=3.1.0",
+    "python-dotenv>=1.0.0",
+    "psycopg[binary]>=3.2.0",
+    "google-generativeai>=0.8.6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.7.0",
+]
