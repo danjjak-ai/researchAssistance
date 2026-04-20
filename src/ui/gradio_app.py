@@ -147,7 +147,7 @@ def create_ui():
         
         demo.load(None, None, None, js=MERMAID_JS)
 
-    return demo
+    return demo, professional_theme
 
 if __name__ == "__main__":
     ui, theme = create_ui()
