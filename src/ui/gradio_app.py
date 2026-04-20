@@ -53,7 +53,7 @@ def create_ui():
         # 에이전트 실행 로직
         def execute_research(query, files, history):
             if not query and not files:
-                history = history theory or []
+                history = history or []
                 history.append({"role": "assistant", "content": "⚠️ 연구 주제를 입력하거나 PDF 파일을 업로드해주세요."})
                 yield history, "⚠️ 입력 필요", gr.update()
                 return
