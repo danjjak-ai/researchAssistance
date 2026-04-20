@@ -9,30 +9,32 @@ from src.agents.outline_agent import QuotaExhaustedError
 from src.core.logger import logger
 
 def create_ui():
-    # Define the custom theme
+    # Define the custom theme - Only use stable attributes to avoid TypeError
     professional_theme = gr.themes.Soft(
         primary_hue="green",
         secondary_hue="slate",
         neutral_hue="slate",
-    ).set(
-        primary_bg_fill="#2D6A4F",
-        primary_bg_fill_hover="#245a41",
-        body_background_fill="#F5F5F4",
-        block_background_fill="#FFFFFF",
-        block_border_color="#E5E7EB",
-        button_primary_background_fill="#2D6A4F",
-        button_primary_background_fill_hover="#245a41",
-        button_primary_text_color="#FFFFFF",
     )
 
-    # Define custom CSS for precision
+    # Define custom CSS for precision and consistent branding
+    # We use CSS for background and border colors to bypass Gradio version differences in Theme.set()
     custom_css = """
     .gradio-container {
         background-color: #F5F5F4 !important;
     }
     .gradio-container .block {
+        background-color: #FFFFFF !important;
         border-radius: 8px !important;
+        border: 1px solid #E5E7EB !important;
         box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+    }
+    button.primary {
+        background-color: #2D6A4F !important;
+        color: #FFFFFF !important;
+        border: none !important;
+    }
+    button.primary:hover {
+        background-color: #245a41 !important;
     }
     """
 
@@ -51,7 +53,7 @@ def create_ui():
         # 에이전트 실행 로직
         def execute_research(query, files, history):
             if not query and not files:
-                history = history or []
+                history = history theory or []
                 history.append({"role": "assistant", "content": "⚠️ 연구 주제를 입력하거나 PDF 파일을 업로드해주세요."})
                 yield history, "⚠️ 입력 필요", gr.update()
                 return
@@ -98,7 +100,7 @@ def create_ui():
 
                         # Mermaid 업데이트 체크
                         current_mermaid = state.get("mermaid_code", "")
-                        mermaid_val = f'<<divdiv class="mermaid">{current_mermaid}</div>' if current_mermaid else gr.update()
+                        mermaid_val = f'<div class="mermaid">{current_mermaid}</div>' if current_mermaid else gr.update()
 
                         yield history, f"⟳ {node_name} 실행 중...", mermaid_val
 
@@ -120,7 +122,7 @@ def create_ui():
                         # Base64 인코딩하여 iframe에 삽입
                         import base64
                         b64_html = base64.b64encode(html_content.encode("utf-8")).decode("utf-8")
-                        interactive_val = f'<<iframeiframe src="data:text/html;base64,{b64_html}" style="width:100%; height:600px; border:none; border-radius:8px;"></iframe>'
+                        interactive_val = f'<iframe src="data:text/html;base64,{b64_html}" style="width:100%; height:600px; border:none; border-radius:8px;"></iframe>'
 
                 yield history, "✅ 연구 완료", gr.update(), interactive_val, audit_content
 
