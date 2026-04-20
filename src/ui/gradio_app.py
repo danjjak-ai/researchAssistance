@@ -9,15 +9,42 @@ from src.agents.outline_agent import QuotaExhaustedError
 from src.core.logger import logger
 
 def create_ui():
-    with gr.Blocks(title="Agentic Research Assistant") as demo:
-        gr.Markdown("# 🔬 Research Knowledge Compiler")
+    # Define the custom theme
+    professional_theme = gr.themes.Soft(
+        primary_hue="green",
+        secondary_hue="slate",
+        neutral_hue="slate",
+    ).set(
+        primary_bg_fill="#2D6A4F",
+        primary_bg_fill_hover="#245a41",
+        body_background_fill="#F5F5F4",
+        block_background_fill="#FFFFFF",
+        block_border_color="#E5E7EB",
+        button_primary_background_fill="#2D6A4F",
+        button_primary_background_fill_hover="#245a41",
+        button_primary_text_color="#FFFFFF",
+    )
+
+    # Define custom CSS for precision
+    custom_css = """
+    .gradio-container {
+        background-color: #F5F5F4 !important;
+    }
+    .gradio-container .block {
+        border-radius: 8px !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+    }
+    """
+
+    with gr.Blocks(title="Agentic Research Assistant", css=custom_css) as demo:
+        gr.Markdown("# 🏛️ Research Knowledge Compiler")
         gr.Markdown("에이전트가 논문을 분석하고 Obsidian에 지식을 구축합니다.")
-        
+
         with gr.Row():
             with gr.Column(scale=1):
                 query_input, file_input, submit_btn = create_idea_thrower()
                 log_display, status_bar = create_action_log()
-                
+
             with gr.Column(scale=2):
                 mermaid_html, interactive_html, open_btn, node_detail = create_knowledge_canvas()
 
@@ -28,9 +55,9 @@ def create_ui():
                 history.append({"role": "assistant", "content": "⚠️ 연구 주제를 입력하거나 PDF 파일을 업로드해주세요."})
                 yield history, "⚠️ 입력 필요", gr.update()
                 return
-            
+
             logger.info("ui_research_started", query=query)
-            
+
             initial_state = {
                 "user_query": query or "업로드된 PDF 파일 분석",
                 "research_questions": [],
@@ -50,41 +77,41 @@ def create_ui():
                 "max_iterations": 3,
                 "status": "planning"
             }
-            
+
             history = history or []
-            yield history, "🔄 연구 계획 수립 중...", gr.update()
+            yield history, "⚙️ 연구 계획 수립 중...", gr.update()
 
             try:
                 # LangGraph 스트리밍
                 for event in research_app.stream(initial_state, config={"configurable": {"thread_id": "ui_run"}}):
                     for node_name, state in event.items():
-                        msg = f"✅ 에이전트 완료: {node_name}"
+                        msg = f"✦ 에이전트 완료: {node_name}"
                         history.append({"role": "assistant", "content": msg})
-                        
+
                         # 논문 검색 결과 표시 추가
                         if node_name == "search" and state.get("verified_papers"):
                             papers = state["verified_papers"]
-                            paper_list = "### 📚 arXiv 검색 결과:\n"
+                            paper_list = "### 📂 arXiv 검색 결과:\n"
                             for p in papers:
                                 paper_list += f"- **{p['title']}** ({p['year']})  \n  [PDF 보기]({p['pdf_url']}) | 인용수: {p.get('citation_count', 0)}\n"
                             history.append({"role": "assistant", "content": paper_list})
-                        
+
                         # Mermaid 업데이트 체크
                         current_mermaid = state.get("mermaid_code", "")
-                        mermaid_val = f'<div class="mermaid">{current_mermaid}</div>' if current_mermaid else gr.update()
-                        
-                        yield history, f"⏳ {node_name} 실행 중...", mermaid_val
-                
+                        mermaid_val = f'<<divdiv class="mermaid">{current_mermaid}</div>' if current_mermaid else gr.update()
+
+                        yield history, f"⟳ {node_name} 실행 중...", mermaid_val
+
                 history.append({"role": "assistant", "content": "🎉 연구 분석이 완료되었습니다!"})
-                
+
                 # 리포트 데이터 로드 및 반영
                 audit_content = "### 📊 Graph Audit Report\n리포트를 불러오는 중입니다..."
                 final_state = state # 마지막 상태
-                
+
                 if final_state.get("audit_report_path") and os.path.exists(final_state["audit_report_path"]):
                     with open(final_state["audit_report_path"], "r", encoding="utf-8") as f:
                         audit_content = f.read()
-                
+
                 # 인터랙티브 HTML 로드 (iframe 대응)
                 interactive_val = gr.update()
                 if final_state.get("graph_report_path") and os.path.exists(final_state["graph_report_path"]):
@@ -93,10 +120,10 @@ def create_ui():
                         # Base64 인코딩하여 iframe에 삽입
                         import base64
                         b64_html = base64.b64encode(html_content.encode("utf-8")).decode("utf-8")
-                        interactive_val = f'<iframe src="data:text/html;base64,{b64_html}" style="width:100%; height:600px; border:none; border-radius:8px;"></iframe>'
+                        interactive_val = f'<<iframeiframe src="data:text/html;base64,{b64_html}" style="width:100%; height:600px; border:none; border-radius:8px;"></iframe>'
 
                 yield history, "✅ 연구 완료", gr.update(), interactive_val, audit_content
-                        
+
             except QuotaExhaustedError as e:
                 logger.error("ui_quota_exhausted", error=str(e))
                 error_msg = (
@@ -113,7 +140,7 @@ def create_ui():
             except Exception as e:
                 logger.error("ui_run_failed", error=str(e))
                 error_str = str(e)
-                
+
                 if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str:
                     error_msg = (
                         "❌ **API 요청 한도 초과 (429)**\n\n"
@@ -128,7 +155,7 @@ def create_ui():
                     )
                 else:
                     error_msg = f"❌ 오류 발생: {error_str}"
-                
+
                 history.append({"role": "assistant", "content": error_msg})
                 yield history, "⚠️ 연구 중단", gr.update()
 
@@ -137,14 +164,14 @@ def create_ui():
             inputs=[query_input, file_input, log_display],
             outputs=[log_display, status_bar, mermaid_html, interactive_html, node_detail]
         )
-        
+
         # 새 창에서 열기 버튼 로직 (HTML 다운로드 링크처럼 동작하게 함)
         def open_report(history):
             # 실제로는 파일 경로를 반환하거나 gr.File을 사용하여 다운로드하게 할 수 있음
             return gr.update()
 
         open_btn.click(fn=lambda: None, js='() => window.open("/file=vault/output/graph.html", "_blank")')
-        
+
         demo.load(None, None, None, js=MERMAID_JS)
 
     return demo, professional_theme
