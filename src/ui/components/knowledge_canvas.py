@@ -14,12 +14,23 @@ async () => {
 def create_knowledge_canvas():
     with gr.Column(scale=2, variant="panel"):
         gr.Markdown("### 🧠 Knowledge Canvas")
-        # Mermaid 렌더링을 위한 HTML 컨테이너
-        mermaid_html = gr.HTML(
-            value='<div class="mermaid">graph TD\nA-->B</div>',
-            elem_id="mermaid-canvas"
-        )
-        with gr.Accordion("지식 상세", open=False):
-            node_detail = gr.Markdown("노드를 선택하면 상세 내용이 표시됩니다.")
+        
+        with gr.Tabs():
+            with gr.Tab("Static Graph (Mermaid)"):
+                mermaid_html = gr.HTML(
+                    value='<div class="mermaid">graph TD\nResearch[연구 주제를 입력하고 분석을 시작하세요]</div>',
+                    elem_id="mermaid-canvas"
+                )
             
-    return mermaid_html, node_detail
+            with gr.Tab("Interactive Graph (Graphify Style)"):
+                gr.Markdown("심층 분석된 인터랙티브 지식 그래프입니다. (분석 완료 후 활성화)")
+                interactive_html = gr.HTML(
+                    value="<div style='background: #1e293b; padding: 40px; text-align: center; border-radius: 8px;'>분석이 완료되면 그래프 탐색기가 여기에 표시됩니다.</div>",
+                    elem_id="interactive-canvas"
+                )
+                open_btn = gr.Button("🔗 새 창에서 지식 그래프 열기", variant="secondary")
+        
+        with gr.Accordion("지식 상세 및 감사 리포트", open=False):
+            node_detail = gr.Markdown("감사 리포트와 상세 노드 정보가 여기에 표시됩니다.")
+            
+    return mermaid_html, interactive_html, open_btn, node_detail

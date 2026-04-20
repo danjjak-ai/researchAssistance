@@ -1,3 +1,5 @@
+import os
+import base64
 import gradio as gr
 from src.ui.components.idea_thrower import create_idea_thrower
 from src.ui.components.knowledge_canvas import create_knowledge_canvas, MERMAID_JS
@@ -17,7 +19,7 @@ def create_ui():
                 log_display, status_bar = create_action_log()
                 
             with gr.Column(scale=2):
-                mermaid_html, node_detail = create_knowledge_canvas()
+                mermaid_html, interactive_html, open_btn, node_detail = create_knowledge_canvas()
 
         # 에이전트 실행 로직
         def execute_research(query, files, history):
@@ -74,7 +76,26 @@ def create_ui():
                         yield history, f"⏳ {node_name} 실행 중...", mermaid_val
                 
                 history.append({"role": "assistant", "content": "🎉 연구 분석이 완료되었습니다!"})
-                yield history, "✅ 연구 완료", gr.update()
+                
+                # 리포트 데이터 로드 및 반영
+                audit_content = "### 📊 Graph Audit Report\n리포트를 불러오는 중입니다..."
+                final_state = state # 마지막 상태
+                
+                if final_state.get("audit_report_path") and os.path.exists(final_state["audit_report_path"]):
+                    with open(final_state["audit_report_path"], "r", encoding="utf-8") as f:
+                        audit_content = f.read()
+                
+                # 인터랙티브 HTML 로드 (iframe 대응)
+                interactive_val = gr.update()
+                if final_state.get("graph_report_path") and os.path.exists(final_state["graph_report_path"]):
+                    with open(final_state["graph_report_path"], "r", encoding="utf-8") as f:
+                        html_content = f.read()
+                        # Base64 인코딩하여 iframe에 삽입
+                        import base64
+                        b64_html = base64.b64encode(html_content.encode("utf-8")).decode("utf-8")
+                        interactive_val = f'<iframe src="data:text/html;base64,{b64_html}" style="width:100%; height:600px; border:none; border-radius:8px;"></iframe>'
+
+                yield history, "✅ 연구 완료", gr.update(), interactive_val, audit_content
                         
             except QuotaExhaustedError as e:
                 logger.error("ui_quota_exhausted", error=str(e))
@@ -114,8 +135,15 @@ def create_ui():
         submit_btn.click(
             execute_research,
             inputs=[query_input, file_input, log_display],
-            outputs=[log_display, status_bar, mermaid_html]
+            outputs=[log_display, status_bar, mermaid_html, interactive_html, node_detail]
         )
+        
+        # 새 창에서 열기 버튼 로직 (HTML 다운로드 링크처럼 동작하게 함)
+        def open_report(history):
+            # 실제로는 파일 경로를 반환하거나 gr.File을 사용하여 다운로드하게 할 수 있음
+            return gr.update()
+
+        open_btn.click(fn=lambda: None, js='() => window.open("/file=vault/output/graph.html", "_blank")')
         
         demo.load(None, None, None, js=MERMAID_JS)
 
