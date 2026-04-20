@@ -150,5 +150,5 @@ def create_ui():
     return demo
 
 if __name__ == "__main__":
-    ui = create_ui()
-    ui.launch(server_name="0.0.0.0", server_port=7860, share=False)
+    ui, theme = create_ui()
+    ui.launch(server_name="0.0.0.0", server_port=7860, share=False, theme=theme)
