@@ -5,8 +5,8 @@ from typing import Optional
 class Settings(BaseSettings):
     # LLM
     GOOGLE_API_KEY: str
-    GEMINI_MODEL_PRIMARY: str = "gemini-3.1-pro"
-    GEMINI_MODEL_FAST: str = "gemini-3.1-flash"
+    GEMINI_MODEL_PRIMARY: str = "gemini-2.5-flash"
+    GEMINI_MODEL_FAST: str = "gemini-2.5-flash"
 
     # APIs
     SEMANTIC_SCHOLAR_API_KEY: Optional[str] = None

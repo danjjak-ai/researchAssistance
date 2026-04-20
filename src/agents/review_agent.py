@@ -1,5 +1,5 @@
 from src.agents.state import ResearchState
-from src.agents.outline_agent import get_llm
+from src.agents.outline_agent import invoke_with_fallback
 from src.core.logger import logger
 import json
 
@@ -13,7 +13,6 @@ def review_agent(state: ResearchState) -> dict:
         "ablations": state["ablation_findings"]
     }
     
-    llm = get_llm()
     prompt = f"""
     당신은 연구 논문의 논리적 무결성을 검증하는 에디터입니다. 
     다음 합성된 지식들 사이의 모순이나 수치 불일치, 또는 논리적 비약을 찾아내세요.
@@ -32,7 +31,7 @@ def review_agent(state: ResearchState) -> dict:
     }}
     """
     
-    response = llm.invoke(prompt)
+    response = invoke_with_fallback(prompt)
     try:
         content = response.content.strip()
         if "```json" in content:

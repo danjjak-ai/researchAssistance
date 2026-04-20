@@ -1,5 +1,5 @@
 from src.agents.state import ResearchState
-from src.agents.outline_agent import get_llm
+from src.agents.outline_agent import invoke_with_fallback
 from src.core.logger import logger
 import json
 
@@ -13,7 +13,6 @@ def synthesis_agent(state: ResearchState) -> dict:
         for m in state["parsed_markdowns"]
     ])
     
-    llm = get_llm()
     prompt = f"""
     당신은 세계적인 지식 합성 전문가입니다. 다음 논문 내용들을 분석하여 통합된 지식 노드와 어블레이션 결과를 추출하세요.
     
@@ -32,7 +31,7 @@ def synthesis_agent(state: ResearchState) -> dict:
     LaTeX 수식은 반드시 $ 또는 $$로 감싸세요.
     """
     
-    response = llm.invoke(prompt)
+    response = invoke_with_fallback(prompt)
     try:
         # JSON 문자열 추출 (마크다운 코드 블록 제거 등 처리 필요할 수 있음)
         content = response.content.strip()
