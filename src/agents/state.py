@@ -20,6 +20,8 @@ class ResearchState(TypedDict):
     knowledge_graph: Dict                    # {nodes: [...], edges: [...]}
     wiki_files: List[Dict]                   # {filename, content, backlinks: list}
     mermaid_code: str                        # 현재 그래프의 Mermaid 표현
+    graph_report_path: Optional[str]         # 인터랙티브 그래프 HTML 경로
+    audit_report_path: Optional[str]         # 감사 리포트 마크다운 경로
 
     # ── 검증 ──
     review_issues: List[Dict]               # {file, line, issue_type, severity, suggestion}

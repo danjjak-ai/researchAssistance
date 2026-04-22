@@ -5,7 +5,7 @@ from src.ui.components.idea_thrower import create_idea_thrower
 from src.ui.components.knowledge_canvas import create_knowledge_canvas, MERMAID_JS
 from src.ui.components.action_log import create_action_log
 from src.agents.graph import app as research_app
-from src.agents.outline_agent import QuotaExhaustedError
+from src.core.llm import QuotaExhaustedError
 from src.core.logger import logger
 
 def create_ui():
@@ -91,7 +91,7 @@ def create_ui():
                 state = initial_state
                 for event in research_app.stream(initial_state, config={"configurable": {"thread_id": "ui_run"}}):
                     for node_name, node_state in event.items():
-                        state = node_state
+                        state.update(node_state)
                         msg = f"✦ 단계 완료: **{node_name}**"
                         history.append({"role": "assistant", "content": msg})
 
@@ -128,11 +128,23 @@ def create_ui():
                 yield history, "✅ 분석 성공", gr.update(), interactive_val, audit_content
 
             except QuotaExhaustedError as e:
-                history.append({"role": "assistant", "content": f"❌ **API 쿼터 소진**: {str(e)}"})
-                yield history, "⚠️ 중단", gr.update(), gr.update(), gr.update()
+                history.append({"role": "assistant", "content": f"❌ **API 사용량 초과 (해결 방법)**:\n\n무료 사용량이 소진되었거나 서버 트래픽이 초과되었습니다.\n\n{str(e)}"})
+                yield history, "⚠️ 사용량 초과", gr.update(), gr.update(), gr.update()
             except Exception as e:
                 logger.error("ui_run_failed", error=str(e))
-                history.append({"role": "assistant", "content": f"❌ **오류 발생**: {str(e)}"})
+                error_str = str(e)
+                if "503" in error_str or "UNAVAILABLE" in error_str:
+                    error_msg = "❌ **API 서버 혼잡 (503)**\n\nGoogle Gemini 서버의 트래픽이 급증하여 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+                elif "429" in error_str or "RESOURCE_EXHAUSTED" in error_str:
+                    error_msg = "❌ **API 요청 한도 초과 (429)**\n\n잠시 후 다시 시도하거나, `.env`에서 API 키를 갱신하세요."
+                elif "401" in error_str or "UNAUTHENTICATED" in error_str:
+                    error_msg = "❌ **인증 실패 (401)**\n\n`.env` 파일의 `GOOGLE_API_KEY`가 올바른지 확인하세요."
+                elif "404" in error_str or "NOT_FOUND" in error_str:
+                    error_msg = "❌ **모델을 찾을 수 없음 (404)**\n\n`.env`의 모델명을 확인하세요. (예: `gemini-2.5-flash`)"
+                else:
+                    error_msg = f"❌ **오류 발생**: {error_str}"
+                
+                history.append({"role": "assistant", "content": error_msg})
                 yield history, "⚠️ 에러 발생", gr.update(), gr.update(), gr.update()
 
         submit_btn.click(

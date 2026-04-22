@@ -1,5 +1,5 @@
 from src.agents.state import ResearchState
-from src.agents.outline_agent import invoke_with_fallback
+from src.core.llm import invoke_with_fallback
 from src.core.logger import logger
 import json
 

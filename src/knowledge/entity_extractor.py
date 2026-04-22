@@ -1,6 +1,6 @@
 from typing import List, Dict
 import json
-from src.agents.outline_agent import get_llm
+from src.core.llm import get_llm
 from src.core.logger import logger
 
 def extract_entities_and_relations(text: str) -> Dict:

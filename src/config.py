@@ -8,6 +8,10 @@ class Settings(BaseSettings):
     GEMINI_MODEL_PRIMARY: str = "gemini-2.5-flash"
     GEMINI_MODEL_FAST: str = "gemini-2.5-flash"
 
+    LLM_PROVIDER: str = "ollama"
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "llama3.2:latest"
+
     # APIs
     SEMANTIC_SCHOLAR_API_KEY: Optional[str] = None
 
