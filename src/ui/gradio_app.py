@@ -153,11 +153,26 @@ def create_ui():
             outputs=[log_display, status_bar, mermaid_html, interactive_html, node_detail]
         )
 
-        open_btn.click(fn=None, js='() => window.open("/file=vault/output/graph.html", "_blank")')
+        def get_graph_file_url():
+            abs_path = os.path.abspath("vault/output/graph.html")
+            if os.name == 'nt':
+                # Windows paths need to be converted for URL
+                abs_path = abs_path.replace("\\", "/")
+                if not abs_path.startswith("/"):
+                    abs_path = "/" + abs_path
+            return f"/file={abs_path}"
+
+        open_btn.click(fn=None, js=f'() => window.open("{get_graph_file_url()}", "_blank")')
         demo.load(None, None, None, js=MERMAID_JS)
 
     return demo
 
 if __name__ == "__main__":
     ui = create_ui()
-    ui.launch(server_name="0.0.0.0", server_port=7860, share=False)
+    # Allow access to the vault directory for serving graph files
+    ui.launch(
+        server_name="0.0.0.0", 
+        server_port=7860, 
+        share=False,
+        allowed_paths=[os.path.abspath("vault")]
+    )

@@ -14,6 +14,8 @@ def graph_builder(state: ResearchState) -> dict:
     logger.info("graph_builder_started")
     
     store = GraphStore()
+    store.load_from_disk() # 기존 데이터 로드
+    
     reporter = GraphReporter()
     
     # 합성된 노트들로부터 엔티티와 관계 추출
@@ -31,6 +33,9 @@ def graph_builder(state: ResearchState) -> dict:
             for source in note.get("sources", []):
                 store.graph.add_node(source, type="Paper")
                 store.graph.add_edge(source, note["name"], type="defines", tag="EXTRACTED", confidence=1.0)
+        
+        # 변경 사항 저장
+        store.save_to_disk()
 
     # 리포트 생성
     html_path = reporter.generate_interactive_html(store)
