@@ -13,29 +13,32 @@ def outline_agent(state: ResearchState) -> dict:
     
     사용자 질문: {state['user_query']}
     
-    다음 JSON 형식으로 응답하세요:
+    다음 JSON 형식으로 응답하세요 (반드시 JSON 데이터만 응답하세요):
     {{
-        "research_questions": ["질문1", "질문2", ...],
+        "research_questions": ["English search query 1", "English search query 2", ...],
         "knowledge_graph_skeleton": {{
             "nodes": [{{ "id": "ConceptA", "type": "concept" }}, ...],
-            "edges": [{{ "source": "ConceptA", "target": "ConceptB", "type": "rel" }}, ...]]
+            "edges": [{{ "source": "ConceptA", "target": "ConceptB", "type": "rel" }}, ...]
         }}
     }}
-    질문은 MECE(상호 배제적이고 전체 포괄적) 원칙을 따르며, 연구의 핵심을 찌르는 3~7개를 생성하세요.
+    
+    중요:
+    1. research_questions는 ArXiv 검색에 최적화되도록 반드시 영어(English)로 생성하세요.
+    2. 질문은 연구의 핵심을 찌르는 3~5개를 생성하세요.
+    3. JSON 형식이 깨지지 않도록 주의하세요.
     """
     
     response = invoke_with_fallback(prompt)
     try:
-        content = response.content.strip()
-        if "```json" in content:
-            content = content.split("```json")[1].split("```")[0].strip()
+        from src.core.llm import clean_json_response
+        content = clean_json_response(response.content)
         data = json.loads(content)
         return {
             "research_questions": data.get("research_questions", []),
             "knowledge_graph": data.get("knowledge_graph_skeleton", {"nodes": [], "edges": []}),
             "status": "searching"
         }
-    except json.JSONDecodeError as e:
+    except Exception as e:
         logger.error("outline_parsing_failed", error=str(e))
         return {
             "research_questions": [state["user_query"]],

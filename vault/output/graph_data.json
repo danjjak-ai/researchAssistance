@@ -1,0 +1,171 @@
+{
+  "nodes": [
+    [
+      "SLM",
+      {
+        "type": "Concept",
+        "description": "Small Language Model"
+      }
+    ],
+    [
+      "Transformer architecture",
+      {
+        "type": "Method",
+        "description": "Transformer architecture"
+      }
+    ],
+    [
+      "Artificial Intelligence",
+      {
+        "type": "Concept",
+        "description": "AI"
+      }
+    ],
+    [
+      "Deep Learning",
+      {
+        "type": "Method",
+        "description": "Deep learning"
+      }
+    ],
+    [
+      "Natural Language Processing",
+      {
+        "type": "Field of Study",
+        "description": "NLP"
+      }
+    ],
+    [
+      "2503.21676v2",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2603.21389v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2505.08588v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2604.05267v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2412.08520v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2601.08844v1",
+      {
+        "type": "Paper"
+      }
+    ]
+  ],
+  "edges": [
+    [
+      "SLM",
+      "Transformer architecture",
+      {
+        "type": "uses",
+        "tag": "EXTRACTED",
+        "confidence": 1.0,
+        "rationale": "SLM가 Transformer architecture를 사용한다는 사실이 직접적으로 명시되어 있다."
+      }
+    ],
+    [
+      "Artificial Intelligence",
+      "Deep Learning",
+      {
+        "type": "Subset",
+        "tag": "EXTRACTED",
+        "confidence": 1.0,
+        "rationale": "AI는 Deep learning을 포함하는 broad field of computer science입니다."
+      }
+    ],
+    [
+      "Artificial Intelligence",
+      "Natural Language Processing",
+      {
+        "type": "Related Field",
+        "tag": "EXTRACTED",
+        "confidence": 1.0,
+        "rationale": "AI와 NLP는 관련된 field of study입니다."
+      }
+    ],
+    [
+      "Deep Learning",
+      "Natural Language Processing",
+      {
+        "type": "Related Method",
+        "tag": "INFERRED",
+        "confidence": 0.8,
+        "rationale": "Deep learning은 NLP를 포함하는 method입니다."
+      }
+    ],
+    [
+      "2503.21676v2",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2603.21389v1",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2505.08588v1",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2604.05267v1",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2412.08520v1",
+      "Natural Language Processing",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2601.08844v1",
+      "Natural Language Processing",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ]
+  ]
+}

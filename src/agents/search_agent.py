@@ -22,16 +22,20 @@ def search_agent(state: ResearchState) -> dict:
     
     # 상위 N개 논문 검증 및 다운로드
     for paper in list(unique_candidates)[:settings.MAX_ITERATIONS * 3]: # 임의의 제한
+        # Semantic Scholar 보강 (실패해도 진행)
         enriched = verify_and_enrich_paper.invoke({"arxiv_id": paper["arxiv_id"]})
         if enriched:
             paper.update(enriched)
-            verified_papers.append(paper)
-            try:
-                # 메타데이터가 좋은 논문 위주로 다운로드
-                path = download_pdf(paper["arxiv_id"])
+        
+        verified_papers.append(paper)
+        
+        try:
+            # ArXiv에서 바로 다운로드 시도
+            path = download_pdf(paper["arxiv_id"])
+            if path:
                 pdf_paths.append(path)
-            except Exception as e:
-                logger.warning("pdf_download_skip", arxiv_id=paper["arxiv_id"], error=str(e))
+        except Exception as e:
+            logger.warning("pdf_download_skip", arxiv_id=paper["arxiv_id"], error=str(e))
                 
     return {
         "candidate_papers": list(unique_candidates),

@@ -44,9 +44,8 @@ def extract_entities_and_relations(text: str) -> Dict:
     
     try:
         response = llm.invoke(prompt)
-        content = response.content.strip()
-        if "```json" in content:
-            content = content.split("```json")[1].split("```")[0].strip()
+        from src.core.llm import clean_json_response
+        content = clean_json_response(response.content)
         return json.loads(content)
     except Exception as e:
         logger.error("entity_extraction_failed", error=str(e))

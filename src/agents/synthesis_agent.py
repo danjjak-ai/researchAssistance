@@ -33,11 +33,8 @@ def synthesis_agent(state: ResearchState) -> dict:
     
     response = invoke_with_fallback(prompt)
     try:
-        # JSON 문자열 추출 (마크다운 코드 블록 제거 등 처리 필요할 수 있음)
-        content = response.content.strip()
-        if "```json" in content:
-            content = content.split("```json")[1].split("```")[0].strip()
-            
+        from src.core.llm import clean_json_response
+        content = clean_json_response(response.content)
         data = json.loads(content)
         return {
             "synthesis_notes": data.get("concepts", []),

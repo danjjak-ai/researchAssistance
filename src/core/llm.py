@@ -4,6 +4,26 @@ from src.config import settings
 from src.core.logger import logger
 import time
 
+import json
+import re
+
+def clean_json_response(content: str) -> str:
+    """LLM 응답에서 JSON 데이터만 추출하여 정제합니다."""
+    content = content.strip()
+    
+    # 1. 마크다운 코드 블록 제거
+    if "```json" in content:
+        content = content.split("```json")[1].split("```")[0].strip()
+    elif "```" in content:
+        content = content.split("```")[1].split("```")[0].strip()
+        
+    # 2. JSON 시작({ 또는 [) 이전의 텍스트 제거
+    match = re.search(r'([\{\[].*[\}\]])', content, re.DOTALL)
+    if match:
+        content = match.group(1)
+        
+    return content
+
 class QuotaExhaustedError(Exception):
     """API 쿼터 소진 시 발생하는 커스텀 에러"""
     pass

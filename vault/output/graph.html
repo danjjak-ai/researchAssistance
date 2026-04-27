@@ -33,8 +33,156 @@
 
     <script>
         const data = {
-  "nodes": [],
-  "links": []
+  "nodes": [
+    {
+      "id": "SLM",
+      "group": 0,
+      "type": "Concept",
+      "description": "Small Language Model"
+    },
+    {
+      "id": "Transformer architecture",
+      "group": 0,
+      "type": "Method",
+      "description": "Transformer architecture"
+    },
+    {
+      "id": "Artificial Intelligence",
+      "group": 2,
+      "type": "Concept",
+      "description": "AI"
+    },
+    {
+      "id": "Deep Learning",
+      "group": 3,
+      "type": "Method",
+      "description": "Deep learning"
+    },
+    {
+      "id": "Natural Language Processing",
+      "group": 1,
+      "type": "Field of Study",
+      "description": "NLP"
+    },
+    {
+      "id": "2503.21676v2",
+      "group": 2,
+      "type": "Paper",
+      "description": ""
+    },
+    {
+      "id": "2603.21389v1",
+      "group": 2,
+      "type": "Paper",
+      "description": ""
+    },
+    {
+      "id": "2505.08588v1",
+      "group": 3,
+      "type": "Paper",
+      "description": ""
+    },
+    {
+      "id": "2604.05267v1",
+      "group": 3,
+      "type": "Paper",
+      "description": ""
+    },
+    {
+      "id": "2412.08520v1",
+      "group": 1,
+      "type": "Paper",
+      "description": ""
+    },
+    {
+      "id": "2601.08844v1",
+      "group": 1,
+      "type": "Paper",
+      "description": ""
+    }
+  ],
+  "links": [
+    {
+      "source": "SLM",
+      "target": "Transformer architecture",
+      "value": 10.0,
+      "type": "uses",
+      "tag": "EXTRACTED",
+      "rationale": "SLM가 Transformer architecture를 사용한다는 사실이 직접적으로 명시되어 있다."
+    },
+    {
+      "source": "Artificial Intelligence",
+      "target": "Deep Learning",
+      "value": 10.0,
+      "type": "Subset",
+      "tag": "EXTRACTED",
+      "rationale": "AI는 Deep learning을 포함하는 broad field of computer science입니다."
+    },
+    {
+      "source": "Artificial Intelligence",
+      "target": "Natural Language Processing",
+      "value": 10.0,
+      "type": "Related Field",
+      "tag": "EXTRACTED",
+      "rationale": "AI와 NLP는 관련된 field of study입니다."
+    },
+    {
+      "source": "Deep Learning",
+      "target": "Natural Language Processing",
+      "value": 8.0,
+      "type": "Related Method",
+      "tag": "INFERRED",
+      "rationale": "Deep learning은 NLP를 포함하는 method입니다."
+    },
+    {
+      "source": "2503.21676v2",
+      "target": "Artificial Intelligence",
+      "value": 10.0,
+      "type": "defines",
+      "tag": "EXTRACTED",
+      "rationale": ""
+    },
+    {
+      "source": "2603.21389v1",
+      "target": "Artificial Intelligence",
+      "value": 10.0,
+      "type": "defines",
+      "tag": "EXTRACTED",
+      "rationale": ""
+    },
+    {
+      "source": "2505.08588v1",
+      "target": "Deep Learning",
+      "value": 10.0,
+      "type": "defines",
+      "tag": "EXTRACTED",
+      "rationale": ""
+    },
+    {
+      "source": "2604.05267v1",
+      "target": "Deep Learning",
+      "value": 10.0,
+      "type": "defines",
+      "tag": "EXTRACTED",
+      "rationale": ""
+    },
+    {
+      "source": "2412.08520v1",
+      "target": "Natural Language Processing",
+      "value": 10.0,
+      "type": "defines",
+      "tag": "EXTRACTED",
+      "rationale": ""
+    },
+    {
+      "source": "2601.08844v1",
+      "target": "Natural Language Processing",
+      "value": 10.0,
+      "type": "defines",
+      "tag": "EXTRACTED",
+      "rationale": ""
+    }
+  ]
 };
         
         const width = window.innerWidth;
@@ -51,7 +199,7 @@
         }));
 
         const simulation = d3.forceSimulation(data.nodes)
-            .force("link", d3.forceLink(data.links).id(d = d.id).distance(100))
+            .force("link", d3.forceLink(data.links).id(d => d.id).distance(100))
             .force("charge", d3.forceManyBody().strength(-300))
             .force("center", d3.forceCenter(width / 2, height / 2));
 
