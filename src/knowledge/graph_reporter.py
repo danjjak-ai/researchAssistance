@@ -30,12 +30,21 @@ class GraphReporter:
         .tag-EXTRACTED {{ color: #4ade80; }}
         .tag-INFERRED {{ color: #fbbf24; }}
         .tag-AMBIGUOUS {{ color: #f87171; }}
+        .fs-btn {{ 
+            background: #334155; color: white; border: none; border-radius: 6px; 
+            padding: 5px 10px; cursor: pointer; font-size: 12px; margin-top: 10px;
+            display: flex; align-items: center; gap: 5px; transition: background 0.2s;
+        }}
+        .fs-btn:hover {{ background: #475569; }}
     </style>
 </head>
 <body>
     <div id="controls">
         <h3>Research Graph Explorer</h3>
         <p style="font-size: 12px; color: #94a3b8;">Drag to move | Scroll to zoom<br>Click nodes to see details</p>
+        <button class="fs-btn" onclick="toggleFullScreen()">
+            <span id="fs-icon">⛶</span> <span id="fs-text">전체화면</span>
+        </button>
     </div>
     <div id="details">
         <h4 id="node-name"></h4>
@@ -143,6 +152,27 @@ class GraphReporter:
             event.subject.fx = null;
             event.subject.fy = null;
         }}
+
+        function toggleFullScreen() {{
+            if (!document.fullscreenElement) {{
+                document.documentElement.requestFullscreen().catch(err => {{
+                    alert(`Error attempting to enable full-screen mode: ${{err.message}}`);
+                }});
+                document.getElementById('fs-text').innerText = '전체화면 종료';
+            }} else {{
+                if (document.exitFullscreen) {{
+                    document.exitFullscreen();
+                    document.getElementById('fs-text').innerText = '전체화면';
+                }}
+            }}
+        }}
+
+        window.addEventListener('resize', () => {{
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+            svg.attr("width", newWidth).attr("height", newHeight);
+            simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2)).alpha(0.3).restart();
+        }});
     </script>
 </body>
 </html>

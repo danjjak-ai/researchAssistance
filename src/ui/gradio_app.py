@@ -56,7 +56,7 @@ def create_ui():
                 log_display, status_bar = create_action_log()
 
             with gr.Column(scale=2):
-                mermaid_html, interactive_html, open_btn, node_detail = create_knowledge_canvas()
+                mermaid_html, interactive_html, node_detail = create_knowledge_canvas()
 
         # 에이전트 실행 로직
         def execute_research(query, files, history):
@@ -155,10 +155,6 @@ def create_ui():
             outputs=[log_display, status_bar, mermaid_html, interactive_html, node_detail]
         )
 
-        def get_graph_file_url():
-            return f"/static/vault/output/graph.html?t={int(time.time())}"
-
-        open_btn.click(fn=None, js=f'() => window.open("{get_graph_file_url()}", "_blank")')
         demo.load(None, None, None, js=MERMAID_JS)
 
     return demo

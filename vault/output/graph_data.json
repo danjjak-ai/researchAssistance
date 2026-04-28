@@ -18,21 +18,21 @@
       "Artificial Intelligence",
       {
         "type": "Concept",
-        "description": "AI\nAI 시스템이 인간의 지능을 가질 수 있는 컴퓨터 과학 분야\nAI가 무엇인지\nAI는 인공지능을 의미하며, 컴퓨터 과학의 한 분야입니다."
+        "description": "AI\nAI 시스템이 인간의 지능을 가질 수 있는 컴퓨터 과학 분야\nAI가 무엇인지\nAI는 인공지능을 의미하며, 컴퓨터 과학의 한 분야입니다.\nAI의 개념"
       }
     ],
     [
       "Deep Learning",
       {
         "type": "Method",
-        "description": "Deep learning\n데이터를 분석하고 예측이나 결정을 내는 데 사용하는 신경망\nDeep learning이 무엇인지\nDeep learning은 ней로 네트워크를 사용하여 데이터 분석을 위한 기법입니다.\nDeep Learning"
+        "description": "Deep learning\n데이터를 분석하고 예측이나 결정을 내는 데 사용하는 신경망\nDeep learning이 무엇인지\nDeep learning은 ней로 네트워크를 사용하여 데이터 분석을 위한 기법입니다.\nDeep Learning\nDeep Learning의 방법론"
       }
     ],
     [
       "Natural Language Processing",
       {
         "type": "Field of Study",
-        "description": "NLP\nNLP가 무엇인지\nNLP는 인간 언어를 이해하고 생성하는 기법을 연구합니다."
+        "description": "NLP\nNLP가 무엇인지\nNLP는 인간 언어를 이해하고 생성하는 기법을 연구합니다.\nNLP의 분야"
       }
     ],
     [
@@ -188,7 +188,8 @@
     [
       "2306.11113v2",
       {
-        "type": "Paper"
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2306.11113v2.pdf"
       }
     ],
     [
@@ -220,6 +221,27 @@
       {
         "type": "Paper"
       }
+    ],
+    [
+      "2306.04338v1",
+      {
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2306.04338v1.pdf"
+      }
+    ],
+    [
+      "2602.11092v2",
+      {
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2602.11092v2.pdf"
+      }
+    ],
+    [
+      "2304.04780v1",
+      {
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2304.04780v1.pdf"
+      }
     ]
   ],
   "edges": [
@@ -237,10 +259,10 @@
       "Artificial Intelligence",
       "Deep Learning",
       {
-        "type": "subfield of",
+        "type": "Subset",
         "tag": "EXTRACTED",
         "confidence": 1.0,
-        "rationale": "AI의 한 부분으로서 Deep Learning이 정의된다."
+        "rationale": "AI는 Deep Learning의 한 부분으로, Deep Learning은 AI의 방법론이다."
       }
     ],
     [
@@ -250,7 +272,7 @@
         "type": "Related Field",
         "tag": "EXTRACTED",
         "confidence": 1.0,
-        "rationale": "AI와 NLP는 관련된 field입니다."
+        "rationale": "AI와 NLP는 관련된 분야이며, AI가 NLP의 분야를ครอบ giữ한다."
       }
     ],
     [
@@ -556,6 +578,15 @@
       }
     ],
     [
+      "2306.11113v2",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
       "2502.06963v2",
       "지식합성기 연산",
       {
@@ -593,6 +624,51 @@
     ],
     [
       "id4",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2306.04338v1",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2306.04338v1",
+      "Natural Language Processing",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2602.11092v2",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2602.11092v2",
+      "Natural Language Processing",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2304.04780v1",
       "Deep Learning",
       {
         "type": "defines",

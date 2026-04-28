@@ -1,4 +1,6 @@
 import gradio as gr
+import os
+import time
 
 MERMAID_JS = """
 async () => {
@@ -10,6 +12,12 @@ async () => {
     };
 }
 """
+
+def get_initial_interactive_html():
+    graph_path = "vault/output/graph.html"
+    if os.path.exists(graph_path):
+        return f'<iframe src="/static/vault/output/graph.html?t={int(time.time())}" width="100%" height="600px" style="border:none; border-radius: 8px;"></iframe>'
+    return "<div style='background: #1e293b; padding: 40px; text-align: center; border-radius: 8px;'>분석이 완료되면 그래프 탐색기가 여기에 표시됩니다.</div>"
 
 def create_knowledge_canvas():
     with gr.Column(scale=2, variant="panel"):
@@ -23,14 +31,13 @@ def create_knowledge_canvas():
                 )
             
             with gr.Tab("Interactive Graph (Graphify Style)"):
-                gr.Markdown("심층 분석된 인터랙티브 지식 그래프입니다. (분석 완료 후 활성화)")
+                gr.Markdown("심층 분석된 인터랙티브 지식 그래프입니다.")
                 interactive_html = gr.HTML(
-                    value="<div style='background: #1e293b; padding: 40px; text-align: center; border-radius: 8px;'>분석이 완료되면 그래프 탐색기가 여기에 표시됩니다.</div>",
+                    value=get_initial_interactive_html(),
                     elem_id="interactive-canvas"
                 )
-                open_btn = gr.Button("🔗 새 창에서 지식 그래프 열기", variant="secondary")
         
         with gr.Accordion("지식 상세 및 감사 리포트", open=False):
             node_detail = gr.Markdown("감사 리포트와 상세 노드 정보가 여기에 표시됩니다.")
             
-    return mermaid_html, interactive_html, open_btn, node_detail
+    return mermaid_html, interactive_html, node_detail
