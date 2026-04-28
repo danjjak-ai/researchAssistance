@@ -16,7 +16,7 @@ async () => {
 def get_initial_interactive_html():
     graph_path = "vault/output/graph.html"
     if os.path.exists(graph_path):
-        return f'<iframe src="/static/vault/output/graph.html?t={int(time.time())}" width="100%" height="600px" style="border:none; border-radius: 8px;"></iframe>'
+        return f'<iframe src="/static/vault/output/graph.html?t={int(time.time())}" width="100%" height="800px" style="border:none; border-radius: 8px;"></iframe>'
     return "<div style='background: #1e293b; padding: 40px; text-align: center; border-radius: 8px;'>분석이 완료되면 그래프 탐색기가 여기에 표시됩니다.</div>"
 
 def create_knowledge_canvas():

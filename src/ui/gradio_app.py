@@ -125,7 +125,7 @@ def create_ui():
                 # 인터랙티브 그래프 임베딩 (FastAPI 정적 경로 사용)
                 interactive_val = gr.update()
                 if state.get("graph_report_path") and os.path.exists(state["graph_report_path"]):
-                    interactive_val = f'<iframe src="/static/vault/output/graph.html?t={int(time.time())}" style="width:100%; height:600px; border:none; border-radius:12px;"></iframe>'
+                    interactive_val = f'<iframe src="/static/vault/output/graph.html?t={int(time.time())}" style="width:100%; height:800px; border:none; border-radius:12px;"></iframe>'
 
                 yield history, "✅ 분석 성공", gr.update(), interactive_val, audit_content
 

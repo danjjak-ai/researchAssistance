@@ -31,19 +31,21 @@ class GraphReporter:
         .tag-INFERRED {{ color: #fbbf24; }}
         .tag-AMBIGUOUS {{ color: #f87171; }}
         .fs-btn {{ 
-            background: #334155; color: white; border: none; border-radius: 6px; 
-            padding: 5px 10px; cursor: pointer; font-size: 12px; margin-top: 10px;
-            display: flex; align-items: center; gap: 5px; transition: background 0.2s;
+            background: #ef4444; color: white; border: 2px solid white; border-radius: 6px; 
+            padding: 8px 12px; cursor: pointer; font-size: 14px; margin-top: 15px;
+            display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;
+            font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 100;
         }}
-        .fs-btn:hover {{ background: #475569; }}
+        .fs-btn:hover {{ background: #dc2626; transform: scale(1.05); }}
     </style>
 </head>
 <body>
     <div id="controls">
         <h3>Research Graph Explorer</h3>
         <p style="font-size: 12px; color: #94a3b8;">Drag to move | Scroll to zoom<br>Click nodes to see details</p>
-        <button class="fs-btn" onclick="toggleFullScreen()">
-            <span id="fs-icon">⛶</span> <span id="fs-text">전체화면</span>
+        <button class="fs-btn" onclick="toggleFullScreen()" id="fullscreen-button">
+            <span id="fs-icon">⛶</span> <span id="fs-text">전체화면 전환</span>
         </button>
     </div>
     <div id="details">

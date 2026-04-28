@@ -16,12 +16,23 @@
         .tag-EXTRACTED { color: #4ade80; }
         .tag-INFERRED { color: #fbbf24; }
         .tag-AMBIGUOUS { color: #f87171; }
+        .fs-btn { 
+            background: #ef4444; color: white; border: 2px solid white; border-radius: 6px; 
+            padding: 8px 12px; cursor: pointer; font-size: 14px; margin-top: 15px;
+            display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;
+            font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+        .fs-btn:hover { background: #dc2626; transform: scale(1.05); }
     </style>
 </head>
 <body>
     <div id="controls">
         <h3>Research Graph Explorer</h3>
         <p style="font-size: 12px; color: #94a3b8;">Drag to move | Scroll to zoom<br>Click nodes to see details</p>
+        <button class="fs-btn" onclick="toggleFullScreen()" id="fullscreen-button">
+            <span id="fs-icon">⛶</span> <span id="fs-text">전체화면 전환</span>
+        </button>
     </div>
     <div id="details">
         <h4 id="node-name"></h4>
@@ -64,7 +75,7 @@
     },
     {
       "id": "Natural Language Processing",
-      "group": 3,
+      "group": 4,
       "type": "Field of Study",
       "description": "NLP\nNLP가 무엇인지\nNLP는 인간 언어를 이해하고 생성하는 기법을 연구합니다.\nNLP의 분야",
       "pdf_path": ""
@@ -99,21 +110,21 @@
     },
     {
       "id": "2412.08520v1",
-      "group": 3,
+      "group": 4,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
     },
     {
       "id": "2601.08844v1",
-      "group": 3,
+      "group": 4,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
     },
     {
       "id": "Natural Language Processing (NLP)",
-      "group": 3,
+      "group": 4,
       "type": "Field of Study",
       "description": "인간 언어와 컴퓨터 간의 상호작용에 초점을 맞춘 연구 분야",
       "pdf_path": ""
@@ -176,77 +187,77 @@
     },
     {
       "id": "SOURCE: 2306.11113v2",
-      "group": 3,
+      "group": 4,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
     },
     {
       "id": "SOURCE: 2502.06963v2",
-      "group": 3,
+      "group": 4,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
     },
     {
       "id": "지식합성",
-      "group": 4,
+      "group": 3,
       "type": "Concept/Method",
       "description": "지식의 생성 및 관리를 위한 기술",
       "pdf_path": ""
     },
     {
       "id": "지식합성기",
-      "group": 4,
+      "group": 3,
       "type": "Dataset",
       "description": "지식의 구조화된 표현을 위한 데이터베이스",
       "pdf_path": ""
     },
     {
       "id": "지식합성기 연산",
-      "group": 4,
+      "group": 3,
       "type": "Method",
       "description": "지식합성기에서 수행되는 연산",
       "pdf_path": ""
     },
     {
       "id": "2412.15876v1",
-      "group": 4,
+      "group": 3,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
     },
     {
       "id": "2601.16513v1",
-      "group": 4,
+      "group": 3,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
     },
     {
       "id": "2512.20902v1",
-      "group": 4,
+      "group": 3,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
     },
     {
       "id": "2501.02842v1",
-      "group": 4,
+      "group": 3,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
     },
     {
       "id": "2306.11113v2",
-      "group": 4,
+      "group": 3,
       "type": "Paper",
       "description": "",
       "pdf_path": "vault/raw\\2306.11113v2.pdf"
     },
     {
       "id": "2502.06963v2",
-      "group": 4,
+      "group": 3,
       "type": "Paper",
       "description": "",
       "pdf_path": ""
@@ -281,14 +292,14 @@
     },
     {
       "id": "2306.04338v1",
-      "group": 3,
+      "group": 4,
       "type": "Paper",
       "description": "",
       "pdf_path": "vault/raw\\2306.04338v1.pdf"
     },
     {
       "id": "2602.11092v2",
-      "group": 3,
+      "group": 4,
       "type": "Paper",
       "description": "",
       "pdf_path": "vault/raw\\2602.11092v2.pdf"
@@ -776,6 +787,27 @@
             event.subject.fx = null;
             event.subject.fy = null;
         }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message}`);
+                });
+                document.getElementById('fs-text').innerText = '전체화면 종료';
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    document.getElementById('fs-text').innerText = '전체화면';
+                }
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+            svg.attr("width", newWidth).attr("height", newHeight);
+            simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2)).alpha(0.3).restart();
+        });
     </script>
 </body>
 </html>
