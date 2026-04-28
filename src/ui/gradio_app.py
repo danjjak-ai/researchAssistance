@@ -1,6 +1,11 @@
 import os
 import base64
 import gradio as gr
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+import uvicorn
+import time
+
 from src.ui.components.idea_thrower import create_idea_thrower
 from src.ui.components.knowledge_canvas import create_knowledge_canvas, MERMAID_JS
 from src.ui.components.action_log import create_action_log
@@ -117,13 +122,10 @@ def create_ui():
                     with open(state["audit_report_path"], "r", encoding="utf-8") as f:
                         audit_content = f.read()
 
-                # 인터랙티브 그래프 임베딩
+                # 인터랙티브 그래프 임베딩 (FastAPI 정적 경로 사용)
                 interactive_val = gr.update()
                 if state.get("graph_report_path") and os.path.exists(state["graph_report_path"]):
-                    with open(state["graph_report_path"], "r", encoding="utf-8") as f:
-                        html_content = f.read()
-                        b64_html = base64.b64encode(html_content.encode("utf-8")).decode("utf-8")
-                        interactive_val = f'<iframe src="data:text/html;base64,{b64_html}" style="width:100%; height:600px; border:none; border-radius:12px;"></iframe>'
+                    interactive_val = f'<iframe src="/static/vault/output/graph.html?t={int(time.time())}" style="width:100%; height:600px; border:none; border-radius:12px;"></iframe>'
 
                 yield history, "✅ 분석 성공", gr.update(), interactive_val, audit_content
 
@@ -154,13 +156,7 @@ def create_ui():
         )
 
         def get_graph_file_url():
-            abs_path = os.path.abspath("vault/output/graph.html")
-            if os.name == 'nt':
-                # Windows paths need to be converted for URL
-                abs_path = abs_path.replace("\\", "/")
-                if not abs_path.startswith("/"):
-                    abs_path = "/" + abs_path
-            return f"/file={abs_path}"
+            return f"/static/vault/output/graph.html?t={int(time.time())}"
 
         open_btn.click(fn=None, js=f'() => window.open("{get_graph_file_url()}", "_blank")')
         demo.load(None, None, None, js=MERMAID_JS)
@@ -168,11 +164,15 @@ def create_ui():
     return demo
 
 if __name__ == "__main__":
-    ui = create_ui()
-    # Allow access to the vault directory for serving graph files
-    ui.launch(
-        server_name="0.0.0.0", 
-        server_port=7860, 
-        share=False,
-        allowed_paths=[os.path.abspath("vault")]
-    )
+    demo = create_ui()
+    app = FastAPI()
+    
+    # vault 디렉토리를 /static/vault 경로로 직접 서빙 (윈도우 경로 문제 해결)
+    vault_abs_path = os.path.abspath("vault")
+    app.mount("/static/vault", StaticFiles(directory=vault_abs_path), name="vault")
+    
+    # Gradio 앱 마운트
+    gr.mount_gradio_app(app, demo, path="/")
+    
+    print(f"[INFO] FastApi + Gradio Server starting on http://localhost:7860")
+    uvicorn.run(app, host="0.0.0.0", port=7860)

@@ -98,7 +98,14 @@ class GraphReporter:
         node.on("click", (event, d) => {{
             d3.select("#details").style("display", "block");
             d3.select("#node-name").text(d.id + " [" + d.type + "]");
-            d3.select("#node-desc").text(d.description || "상세 설명 없음");
+            
+            let descHtml = d.description || "상세 설명 없음";
+            if (d.pdf_path) {{
+                // vault/raw/xxx.pdf -> /static/vault/raw/xxx.pdf
+                const pdfUrl = d.pdf_path.replace(/\\\\/g, '/').replace(/^vault\\//, '/static/vault/');
+                descHtml += '<p style="margin-top: 10px;"><a href="' + pdfUrl + '" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: bold;">📄 원문 PDF 보기</a></p>';
+            }}
+            d3.select("#node-desc").html(descHtml);
             
             // 관계 정보 필터링
             const rels = data.links.filter(l => l.source.id === d.id || l.target.id === d.id);

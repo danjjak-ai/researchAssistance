@@ -119,7 +119,8 @@ class GraphStore:
                 "id": node,
                 "group": attrs.get("community", 0),
                 "type": attrs.get("type", "Concept"),
-                "description": attrs.get("description", "")
+                "description": attrs.get("description", ""),
+                "pdf_path": attrs.get("pdf_path", "")
             })
             
         for u, v, attrs in self.graph.edges(data=True):

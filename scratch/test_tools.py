@@ -24,6 +24,11 @@ def test_flow():
         store = GraphStore()
         store.load_from_disk()
         store.add_entities_and_relations(data)
+        
+        # Add a test paper node with PDF path
+        store.graph.add_node("2603.21389v1", type="Paper", pdf_path="vault/raw/2603.21389v1.pdf")
+        store.graph.add_edge("2603.21389v1", "SLM", type="defines")
+        
         store.save_to_disk()
         
         reporter = GraphReporter()

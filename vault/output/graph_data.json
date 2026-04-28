@@ -11,28 +11,28 @@
       "Transformer architecture",
       {
         "type": "Method",
-        "description": "Transformer architecture"
+        "description": "Transformer architecture\nTransformer 아키텍처"
       }
     ],
     [
       "Artificial Intelligence",
       {
         "type": "Concept",
-        "description": "AI"
+        "description": "AI\nAI 시스템이 인간의 지능을 가질 수 있는 컴퓨터 과학 분야\nAI가 무엇인지\nAI는 인공지능을 의미하며, 컴퓨터 과학의 한 분야입니다."
       }
     ],
     [
       "Deep Learning",
       {
         "type": "Method",
-        "description": "Deep learning"
+        "description": "Deep learning\n데이터를 분석하고 예측이나 결정을 내는 데 사용하는 신경망\nDeep learning이 무엇인지\nDeep learning은 ней로 네트워크를 사용하여 데이터 분석을 위한 기법입니다.\nDeep Learning"
       }
     ],
     [
       "Natural Language Processing",
       {
         "type": "Field of Study",
-        "description": "NLP"
+        "description": "NLP\nNLP가 무엇인지\nNLP는 인간 언어를 이해하고 생성하는 기법을 연구합니다."
       }
     ],
     [
@@ -44,7 +44,8 @@
     [
       "2603.21389v1",
       {
-        "type": "Paper"
+        "type": "Paper",
+        "pdf_path": "vault/raw/2603.21389v1.pdf"
       }
     ],
     [
@@ -67,6 +68,155 @@
     ],
     [
       "2601.08844v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "Natural Language Processing (NLP)",
+      {
+        "type": "Field of Study",
+        "description": "인간 언어와 컴퓨터 간의 상호작용에 초점을 맞춘 연구 분야"
+      }
+    ],
+    [
+      "Transfer Learning",
+      {
+        "type": "Method",
+        "description": "Transfer learning"
+      }
+    ],
+    [
+      "2412.16365v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2603.01691v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2506.05646v2",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "SOURCE: 2412.15876v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "SOURCE: 2601.16513v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "SOURCE: 2512.20902v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "SOURCE: 2501.02842v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "SOURCE: 2306.11113v2",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "SOURCE: 2502.06963v2",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "지식합성",
+      {
+        "type": "Concept/Method",
+        "description": "지식의 생성 및 관리를 위한 기술"
+      }
+    ],
+    [
+      "지식합성기",
+      {
+        "type": "Dataset",
+        "description": "지식의 구조화된 표현을 위한 데이터베이스"
+      }
+    ],
+    [
+      "지식합성기 연산",
+      {
+        "type": "Method",
+        "description": "지식합성기에서 수행되는 연산"
+      }
+    ],
+    [
+      "2412.15876v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2601.16513v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2512.20902v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2501.02842v1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2306.11113v2",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "2502.06963v2",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "id1",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "id2",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "id3",
+      {
+        "type": "Paper"
+      }
+    ],
+    [
+      "id4",
       {
         "type": "Paper"
       }
@@ -80,17 +230,17 @@
         "type": "uses",
         "tag": "EXTRACTED",
         "confidence": 1.0,
-        "rationale": "SLM가 Transformer architecture를 사용한다는 사실이 직접적으로 명시되어 있다."
+        "rationale": "SLM은 Transformer 아키텍처를 사용한다."
       }
     ],
     [
       "Artificial Intelligence",
       "Deep Learning",
       {
-        "type": "Subset",
+        "type": "subfield of",
         "tag": "EXTRACTED",
         "confidence": 1.0,
-        "rationale": "AI는 Deep learning을 포함하는 broad field of computer science입니다."
+        "rationale": "AI의 한 부분으로서 Deep Learning이 정의된다."
       }
     ],
     [
@@ -100,7 +250,27 @@
         "type": "Related Field",
         "tag": "EXTRACTED",
         "confidence": 1.0,
-        "rationale": "AI와 NLP는 관련된 field of study입니다."
+        "rationale": "AI와 NLP는 관련된 field입니다."
+      }
+    ],
+    [
+      "Artificial Intelligence",
+      "Natural Language Processing (NLP)",
+      {
+        "type": "related field",
+        "tag": "EXTRACTED",
+        "confidence": 1.0,
+        "rationale": "AI 시스템이 인간 언어와 컴퓨터 간의 상호작용을 이해하고 처리하는 데 사용되는 NLP 시스템과 관련이 있다."
+      }
+    ],
+    [
+      "Artificial Intelligence",
+      "Transfer Learning",
+      {
+        "type": "technique in",
+        "tag": "EXTRACTED",
+        "confidence": 1.0,
+        "rationale": "AI는 transfer learning technique을 포함하는 broad field of computer science입니다."
       }
     ],
     [
@@ -111,6 +281,26 @@
         "tag": "INFERRED",
         "confidence": 0.8,
         "rationale": "Deep learning은 NLP를 포함하는 method입니다."
+      }
+    ],
+    [
+      "Deep Learning",
+      "Transfer Learning",
+      {
+        "type": "subset of",
+        "tag": "EXTRACTED",
+        "confidence": 1.0,
+        "rationale": "deep learning은 transfer learning technique을 포함하는 subset of machine learning입니다."
+      }
+    ],
+    [
+      "Natural Language Processing",
+      "Artificial Intelligence",
+      {
+        "type": "application",
+        "tag": "INFERRED",
+        "confidence": 0.9,
+        "rationale": "NLP는 AI를 사용하여 인간 언어를 이해하고 생성하는 기법입니다."
       }
     ],
     [
@@ -129,6 +319,13 @@
         "type": "defines",
         "tag": "EXTRACTED",
         "confidence": 1.0
+      }
+    ],
+    [
+      "2603.21389v1",
+      "SLM",
+      {
+        "type": "defines"
       }
     ],
     [
@@ -159,8 +356,244 @@
       }
     ],
     [
+      "2412.08520v1",
+      "Natural Language Processing (NLP)",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
       "2601.08844v1",
       "Natural Language Processing",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2601.08844v1",
+      "Natural Language Processing (NLP)",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2412.16365v1",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2412.16365v1",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2412.16365v1",
+      "Transfer Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2603.01691v1",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2506.05646v2",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2506.05646v2",
+      "Transfer Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "SOURCE: 2412.15876v1",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "SOURCE: 2601.16513v1",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "SOURCE: 2512.20902v1",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "SOURCE: 2501.02842v1",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "SOURCE: 2306.11113v2",
+      "Natural Language Processing",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "SOURCE: 2502.06963v2",
+      "Natural Language Processing",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "지식합성",
+      "지식합성기",
+      {
+        "type": "EXTRACTED",
+        "tag": "EXTRACTED",
+        "confidence": 1.0,
+        "rationale": "지식합성이 지식의 생성 및 관리를 위한 기술임을 명시하고 있습니다."
+      }
+    ],
+    [
+      "지식합성기",
+      "지식합성기 연산",
+      {
+        "type": "INFERRED",
+        "tag": "INFERRED",
+        "confidence": 1.0,
+        "rationale": "지식합성기에서 수행되는 연산이 지식의 생성 및 관리를 위한 기술임을 논리적으로 추론할 수 있습니다."
+      }
+    ],
+    [
+      "2412.15876v1",
+      "지식합성",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2601.16513v1",
+      "지식합성",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2512.20902v1",
+      "지식합성기",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2501.02842v1",
+      "지식합성기",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2306.11113v2",
+      "지식합성기 연산",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2502.06963v2",
+      "지식합성기 연산",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "id1",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "id2",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "id3",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "id4",
+      "Deep Learning",
       {
         "type": "defines",
         "tag": "EXTRACTED",
