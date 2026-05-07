@@ -24,7 +24,7 @@ class GraphReporter:
         #controls {{ position: absolute; top: 20px; left: 20px; z-index: 10; background: rgba(30, 41, 59, 0.8); padding: 15px; border-radius: 12px; backdrop-filter: blur(8px); border: 1px solid #334155; }}
         #details {{ position: absolute; bottom: 20px; right: 20px; z-index: 10; background: rgba(30, 41, 59, 0.8); padding: 15px; border-radius: 12px; width: 300px; backdrop-filter: blur(8px); border: 1px solid #334155; display: none; }}
         .node {{ stroke: #1e293b; stroke-width: 2px; cursor: pointer; }}
-        .link {{ stroke: #64748b; stroke-opacity: 0.4; stroke-width: 1.5; }}
+        .link {{ stroke: #64748b; stroke-opacity: 0.4; }}
         .label {{ font-size: 10px; fill: #94a3b8; pointer-events: none; }}
         h3 {{ margin: 0 0 10px 0; color: #38bdf8; }}
         .tag-EXTRACTED {{ color: #4ade80; }}
@@ -59,6 +59,34 @@ class GraphReporter:
     <script>
         const data = {json_data};
         
+        // 노드별 연결 수(degree) 계산 및 링크 굵기 계산
+        const nodeDegree = {{}};
+        const linkCount = {{}};
+        
+        data.nodes.forEach(d => {{ nodeDegree[d.id] = 0; }});
+        
+        data.links.forEach(l => {{
+            const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+            const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+            
+            if (nodeDegree[sourceId] !== undefined) nodeDegree[sourceId]++;
+            if (nodeDegree[targetId] !== undefined) nodeDegree[targetId]++;
+            
+            const pairId = [sourceId, targetId].sort().join("|||");
+            linkCount[pairId] = (linkCount[pairId] || 0) + 1;
+        }});
+
+        const maxDegree = Math.max(...Object.values(nodeDegree), 1);
+        const radiusScale = d3.scaleSqrt().domain([0, maxDegree]).range([6, 35]);
+        
+        const maxLinkCount = Math.max(...Object.values(linkCount), 1);
+        const linkWidthScale = d3.scaleLinear().domain([1, maxLinkCount]).range([1.5, 8]);
+
+        data.nodes.forEach(d => {{
+            d.degree = nodeDegree[d.id] || 0;
+            d.radius = radiusScale(d.degree);
+        }});
+
         const width = window.innerWidth;
         const height = window.innerHeight;
         
@@ -73,9 +101,10 @@ class GraphReporter:
         }}));
 
         const simulation = d3.forceSimulation(data.nodes)
-            .force("link", d3.forceLink(data.links).id(d => d.id).distance(100))
-            .force("charge", d3.forceManyBody().strength(-300))
-            .force("center", d3.forceCenter(width / 2, height / 2));
+            .force("link", d3.forceLink(data.links).id(d => d.id).distance(150))
+            .force("charge", d3.forceManyBody().strength(-400))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collide", d3.forceCollide().radius(d => d.radius + 10).iterations(2));
 
         const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 
@@ -83,14 +112,20 @@ class GraphReporter:
             .selectAll("line")
             .data(data.links)
             .join("line")
-            .attr("class", "link");
+            .attr("class", "link")
+            .style("stroke-width", d => {{
+                const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+                const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+                const pairId = [sourceId, targetId].sort().join("|||");
+                return linkWidthScale(linkCount[pairId]);
+            }});
 
         const node = g.append("g")
             .selectAll("circle")
             .data(data.nodes)
             .join("circle")
             .attr("class", "node")
-            .attr("r", 8)
+            .attr("r", d => d.radius)
             .attr("fill", d => colorScale(d.group))
             .call(d3.drag()
                 .on("start", dragstarted)
@@ -102,7 +137,7 @@ class GraphReporter:
             .data(data.nodes)
             .join("text")
             .attr("class", "label")
-            .attr("dy", -12)
+            .attr("dy", d => -d.radius - 4)
             .attr("text-anchor", "middle")
             .text(d => d.id);
 

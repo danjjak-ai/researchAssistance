@@ -57,7 +57,8 @@
     [
       "2604.05267v1",
       {
-        "type": "Paper"
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2604.05267v1.pdf"
       }
     ],
     [
@@ -241,6 +242,41 @@
       {
         "type": "Paper",
         "pdf_path": "vault/raw\\2304.04780v1.pdf"
+      }
+    ],
+    [
+      "2306.06371v1",
+      {
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2306.06371v1.pdf"
+      }
+    ],
+    [
+      "2501.05032v2",
+      {
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2501.05032v2.pdf"
+      }
+    ],
+    [
+      "2306.14753v1",
+      {
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2306.14753v1.pdf"
+      }
+    ],
+    [
+      "2502.04355v1",
+      {
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2502.04355v1.pdf"
+      }
+    ],
+    [
+      "2307.05639v2",
+      {
+        "type": "Paper",
+        "pdf_path": "vault/raw\\2307.05639v2.pdf"
       }
     ]
   ],
@@ -670,6 +706,51 @@
     [
       "2304.04780v1",
       "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2306.06371v1",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2501.05032v2",
+      "Artificial Intelligence",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2306.14753v1",
+      "Deep Learning",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2502.04355v1",
+      "Natural Language Processing",
+      {
+        "type": "defines",
+        "tag": "EXTRACTED",
+        "confidence": 1.0
+      }
+    ],
+    [
+      "2307.05639v2",
+      "Natural Language Processing",
       {
         "type": "defines",
         "tag": "EXTRACTED",
